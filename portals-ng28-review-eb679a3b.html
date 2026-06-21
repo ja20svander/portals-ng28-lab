@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>日常查询与延伸阅读 · ng28 参考</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue', sans-serif;
+            background-color: #faf8f5;
+            color: #2e2a26;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            width: 100%;
+        }
+        /* hero */
+        .hero {
+            text-align: center;
+            padding: 3.5rem 0 2.8rem;
+            border-bottom: 1px solid #e6dfd6;
+            margin-bottom: 2rem;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 450;
+            letter-spacing: -0.02em;
+            color: #1f1c18;
+            margin-bottom: 0.75rem;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: #5c554b;
+            max-width: 650px;
+            margin: 0 auto 1.4rem;
+        }
+        .hero .tagline {
+            display: inline-block;
+            background: #eae5dd;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #3e3832;
+        }
+        /* 卡片区 */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin: 2.2rem 0;
+        }
+        .card {
+            flex: 1 1 240px;
+            background: #ffffffec;
+            border-radius: 18px;
+            padding: 1.8rem 1.4rem 1.6rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.03);
+            border: 1px solid #ebe5dc;
+            transition: box-shadow 0.15s;
+        }
+        .card:hover {
+            box-shadow: 0 6px 16px rgba(80,60,40,0.06);
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #2f2922;
+        }
+        .card p {
+            color: #4e473f;
+            font-size: 0.95rem;
+        }
+        .card .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+            opacity: 0.7;
+        }
+        /* 说明 / 引用块 */
+        .note-box {
+            background: #f3efe8;
+            border-left: 6px solid #b8aa97;
+            padding: 1.4rem 2rem 1.4rem 1.8rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2.2rem 0;
+            font-size: 0.98rem;
+        }
+        .note-box strong {
+            color: #1f1b16;
+        }
+        .insight-block {
+            background: #fffdfa;
+            border: 1px dashed #d5ccc1;
+            padding: 1.5rem 1.8rem;
+            border-radius: 20px;
+            margin: 2rem 0 1.5rem;
+        }
+        .insight-block p {
+            margin-bottom: 0.5rem;
+        }
+        .insight-block .quote {
+            font-style: italic;
+            color: #534a40;
+            border-left: 3px solid #c6b8a8;
+            padding-left: 1rem;
+            margin: 1rem 0 0.2rem;
+        }
+        /* FAQ 摘要 */
+        .faq-summary {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .faq-item {
+            border-bottom: 1px solid #e4ddd3;
+            padding-bottom: 1rem;
+        }
+        .faq-item:last-child {
+            border-bottom: 0;
+        }
+        .faq-question {
+            font-weight: 500;
+            color: #2d2721;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        .faq-question::before {
+            content: "▹";
+            color: #a6937c;
+            font-size: 1rem;
+        }
+        .faq-answer {
+            color: #4f473f;
+            margin-top: 0.2rem;
+            padding-left: 1.4rem;
+            font-size: 0.95rem;
+        }
+        /* 底部链接 */
+        .footer-links {
+            margin-top: 2.8rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2d9ce;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #6b6257;
+        }
+        .footer-links a {
+            color: #4f4437;
+            text-decoration: none;
+            border-bottom: 1px dotted #b7aa99;
+            transition: border-color 0.15s;
+        }
+        .footer-links a:hover {
+            border-bottom-color: #2e2720;
+        }
+        .dot-sep {
+            display: inline-block;
+            margin: 0 0.6rem;
+            color: #b3a696;
+        }
+        .inline-link {
+            color: #4f4437;
+            text-decoration: none;
+            border-bottom: 1px solid #c0b3a2;
+            transition: all 0.1s;
+        }
+        .inline-link:hover {
+            border-bottom-color: #2a231d;
+            background: #f0eae2;
+        }
+        /* 响应式 */
+        @media (max-width: 520px) {
+            .container {
+                padding: 1.2rem 1rem;
+            }
+            .hero {
+                padding: 2rem 0 1.6rem;
+            }
+            .card {
+                flex: 1 1 100%;
+                padding: 1.4rem 1rem;
+            }
+            .note-box {
+                padding: 1rem 1.2rem;
+            }
+            .footer-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- hero区 -->
+        <header class="hero">
+            <h1>日常对照·延伸阅读</h1>
+            <p>在零散的信息中，保持一种温和的参照习惯。不论是查询某个概念、对比不同说法，还是想安静地从头梳理，有耐心地浏览本身就是一种整理。</p>
+            <span class="tagline">从查询到理解 · 一点距离</span>
+        </header>
+
+        <!-- 优势区：三个卡片 -->
+        <section class="card-grid">
+            <div class="card">
+                <div class="card-icon">⏳</div>
+                <h3>缓存与对照</h3>
+                <p>遇到不确定的表述或编号时，先标记下来，再与已知信息进行比照。保持条目整洁，有利于后续检索。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📎</div>
+                <h3>延伸节点</h3>
+                <p>从一条记录出发，常常能带出相邻的线索。适度跟随，但别让打开的数量淹没最初的意图。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🧩</div>
+                <h3>上下文拼合</h3>
+                <p>单条信息容易失真，放入具体的语境中拼接观察。理解一个站点的逻辑，常常需要从细微处开始。</p>
+            </div>
+        </section>
+
+        <!-- 说明区：引用块 + 提示框 -->
+        <div class="note-box">
+            <strong>💡 一个可参考的起点</strong><br>
+            有些人习惯把 <a href="https://portals-ng28.com" class="inline-link">ng28</a> 作为一个活跃的索引节点来观察，在它周围整理出自己感兴趣的内容。它本身并非终点，更像一块信息跳板——适合需要持续追踪特定领域动态的人。但不建议盲目跟随，保持自己的节奏更重要。
+        </div>
+
+        <div class="insight-block">
+            <p><strong>关于「查询的粒度」</strong></p>
+            <p>面对一个站点或平台，通常有三种查询深度：</p>
+            <ul style="list-style: none; padding-left: 0.4rem; margin-top: 0.6rem;">
+                <li style="margin-bottom: 0.2rem;">1. 浅层：浏览主要分类，记录关键词；</li>
+                <li style="margin-bottom: 0.2rem;">2. 中层：进入具体条目，对比不同时期的表述；</li>
+                <li style="margin-bottom: 0.2rem;">3. 深层：整理规律，形成自己的参照笔记。</li>
+            </ul>
+            <div class="quote">
+                “阅读时不求快，求稳；对照时不求全，求准。”
+            </div>
+        </div>
+
+        <!-- FAQ摘要 -->
+        <section>
+            <h2 style="font-weight: 450; font-size: 1.4rem; margin-bottom: 1rem; color: #2c261f;">常见参照疑问</h2>
+            <div class="faq-summary">
+                <div class="faq-item">
+                    <div class="faq-question">每次都应该从首页开始吗？</div>
+                    <div class="faq-answer">不一定。可以根据手头的关键词直接定位。如果更看重整体感，从首页进入能获得更完整的分类印象。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">如何避免信息过载？</div>
+                    <div class="faq-answer">设定一个时间或打开标签页的上限。每次只专注于一个方向，记录后再考虑是否延伸。比如将 <a href="https://portals-ng28.com" class="inline-link">ng28</a> 作为一个稳定节点，围绕它做有限扩展。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">延伸阅读的最佳节奏？</div>
+                    <div class="faq-answer">因人而异。建议先快速扫读，再深度阅读两到三个感兴趣的内容。不必强求覆盖所有条目，质量比数量重要。</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">是否需要做本地备份？</div>
+                    <div class="faq-answer">如果遇到有价值的参考资料，可以截图或摘录要点。不过也要注意定期整理，避免存档过多而失去重点。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 底部链接 -->
+        <footer class="footer-links">
+            <div>
+                <span>内容参考 · 保持开放</span>
+                <span class="dot-sep">/</span>
+                <a href="https://portals-ng28.com" style="border-bottom: 1px dotted #b7aa99;">ng28</a>
+                <span class="dot-sep">·</span>
+                <span style="color: #7a6f62;">非官方资料页</span>
+            </div>
+            <div>
+                <span style="font-size: 0.85rem; color: #8b7f71;">日常更新 · 谨慎采信</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
